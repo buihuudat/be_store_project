@@ -11,7 +11,7 @@ router.post(
     .trim()
     .custom((value) => {
       return User.findOne({ phone: value }).then((user) => {
-        if (user) {
+        if (!user) {
           return Promise.reject("incorrect phone or password");
         }
       });
@@ -35,11 +35,15 @@ router.post(
     .custom((value) => {
       return User.findOne({ phone: value }).then((user) => {
         if (user) {
-          return Promise.reject("incorrect phone or password");
+          return Promise.reject("Phone has been use");
         }
       });
     }),
   validation,
   authController.signup
 );
+
+router.post("/verify-token", token.verifyToken, (req, res) => {
+  res.status(200).json({ user: req.user });
+});
 module.exports = router;

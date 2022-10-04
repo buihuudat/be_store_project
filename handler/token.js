@@ -6,7 +6,7 @@ const tokenDecode = (req) => {
   if (bearerHeader) {
     const bearer = bearerHeader.split(" ")[1];
     try {
-      const tokenDecoded = jwt.verify(bearer, process.env.TOKEN_SECRET.KEY);
+      const tokenDecoded = jwt.verify(bearer, process.env.TOKEN_SECRET_KEY);
       return tokenDecoded;
     } catch (error) {
       return false;
